@@ -94,24 +94,14 @@ def generate_response(input_text, prompt, retriever, openai_api_key):
     result = rag_chain.invoke(input_text)
     return result
 
-script = """
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const textArea = document.querySelector("textarea");
-    textArea.addEventListener("focus", function() {
-        if (textArea.value === 'Para qual contexto você precisa de fundamento jurídico?') {
-            textArea.value = '';
-        }
-    });
-    textArea.addEventListener("blur", function() {
-        if (textArea.value === '') {
-            textArea.value = 'Para qual contexto você precisa de fundamento jurídico?';
-        }
-    });
-});
-</script>
+html_code = """
+<textarea id="contexto" onfocus="if(this.value=='Para qual contexto você precisa de fundamento jurídico?') this.value='';" 
+onblur="if(this.value=='') this.value='Para qual contexto você precisa de fundamento jurídico?';">
+Para qual contexto você precisa de fundamento jurídico?
+</textarea>
 """
 
+st.markdown(html_code, unsafe_allow_html=True)
 st.markdown(script, unsafe_allow_html=True)
 
 with st.form('my_form'):
