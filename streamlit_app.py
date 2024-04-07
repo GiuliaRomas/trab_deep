@@ -91,8 +91,8 @@ def generate_response(input_text):
         | StrOutputParser()
     )
 
-    #query = "Contexto: Uma criança estava sofrendo maus tratos dos pais, quais artigos eu poderia utilizar para defender a criança?"
-    result = rag_chain.invoke(input_text)
+    #query = "Contexto: Uma criança estava sofrendo maus tratos dos pais, quais artigos eu poderia utilizar para defender a criança?
+    st.caption(f"**Resposta:** {rag_chain.invoke(input_text)}")
     return result
 
 
@@ -105,4 +105,4 @@ with st.form('my_form'):
     if submitted and openai_api_key.startswith('sk-'):
         resultado = generate_response(text)
         # imprimir o resultado
-        st.caption(f"**Resposta:** {resultado}")
+        
