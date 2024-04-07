@@ -48,15 +48,13 @@ def generate_response(input_text):
     text_splitter = CharacterTextSplitter(chunk_size=500)
     chunks = text_splitter.split_documents(documents_list)
 
-    chunks[0:20]
-
     client = weaviate.Client(
         embedded_options = EmbeddedOptions()
     )
 
     vectorstore = Weaviate.from_documents(
         client = client,
-        documents = chunks,
+        documents = chunks[0:20],
         embedding = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai_api_key),  #text-embedding-3-small usado para criar os embeddings
         by_text = False
     )
