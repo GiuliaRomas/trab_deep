@@ -64,7 +64,7 @@ def inicializa(openai_api_key):
 
     vectorstore = Weaviate.from_documents(
         client = client,
-        documents = chunks[0:20],
+        documents = chunks, # chunks serve para dividir os documentos em partes menores -> chunks[0:20] pega os primeiros 20 chunks
         embedding = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai_api_key),  #text-embedding-3-small usado para criar os embeddings
         by_text = False
     )
@@ -89,7 +89,6 @@ def inicializa(openai_api_key):
 
 def generate_response(input_text, prompt, retriever, openai_api_key):
     #print(prompt)
-    
     
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.0, openai_api_key=openai_api_key)
 
