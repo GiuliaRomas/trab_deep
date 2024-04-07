@@ -18,7 +18,7 @@ st.set_page_config(page_title="Pesquisa por Fundamento Jurídico", page_icon="�
 st.markdown("<h1 style='font-size:38px;'>⚖️ Pesquisa por Fundamento Jurídico</h1>", unsafe_allow_html=True)
 # escrever no sidebar
 st.sidebar.markdown(
-            "## How to use\n"
+            "## Como usar\n"
             "1. Entre com sua OpenAI API key abaixo\n" 
             "2. Digite o contexto desejado\n"
             "3. Clique em enviar\n"
@@ -33,8 +33,6 @@ st.sidebar.markdown('## 📄 Sobre a aplicação:')
 # escrever no sidebar com letras menores
 st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por artigos e leis para fundamentar peças jurídicas')
 
-# colocar divisoria no sidebar
-st.sidebar.markdown('---')
 
 
 def inicializa(openai_api_key):
