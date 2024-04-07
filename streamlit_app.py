@@ -94,19 +94,10 @@ def generate_response(input_text, prompt, retriever, openai_api_key):
     result = rag_chain.invoke(input_text)
     return result
 
-html_code = """
-<textarea id="contexto" onfocus="if(this.value=='Para qual contexto você precisa de fundamento jurídico?') this.value='';" 
-onblur="if(this.value=='') this.value='Para qual contexto você precisa de fundamento jurídico?';">
-Para qual contexto você precisa de fundamento jurídico?
-</textarea>
-"""
-
-st.markdown(html_code, unsafe_allow_html=True)
-st.markdown(script, unsafe_allow_html=True)
 
 with st.form('my_form'):
-    text = st.text_area('Digite o contexto:', value='Para qual contexto você precisa de fundamento jurídico?', help='Para qual contexto você precisa de fundamento jurídico?')
-
+    text = st.text_area('Digite o contexto:', key='Para qual contexto você precisa de fundamento jurídico?', help='Para qual contexto você precisa de fundamento jurídico?')
+    
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
