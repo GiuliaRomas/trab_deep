@@ -24,15 +24,6 @@ st.sidebar.markdown('---')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
-with st.form('my_form'):
-    text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
-    
-    submitted = st.form_submit_button('Enviar')
-    if not openai_api_key.startswith('sk-'):
-        st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
-    if submitted and openai_api_key.startswith('sk-'):
-        generate_response(text)
-
 def inicializacao():
     # Caminho da pasta no Google Drive onde estão os arquivos
     caminho_da_pasta = 'trab/docs'
@@ -107,5 +98,11 @@ def generate_response(input_text):
     #query = "Contexto: Uma criança estava sofrendo maus tratos dos pais, quais artigos eu poderia utilizar para defender a criança?"
     st.write(f'Resultado: {rag_chain.invoke(input_text)}')
 
-
-        
+with st.form('my_form'):
+    text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
+    
+    submitted = st.form_submit_button('Enviar')
+    if not openai_api_key.startswith('sk-'):
+        st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
+    if submitted and openai_api_key.startswith('sk-'):
+        generate_response(text)
