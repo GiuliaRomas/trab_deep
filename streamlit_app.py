@@ -94,13 +94,29 @@ def generate_response(input_text, prompt, retriever, openai_api_key):
     result = rag_chain.invoke(input_text)
     return result
 
-# inicializar o prompt e o retriever
-#prompt, retriever = inicializa(openai_api_key)
+script = """
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const textArea = document.querySelector("textarea");
+    textArea.addEventListener("focus", function() {
+        if (textArea.value === 'Para qual contexto você precisa de fundamento jurídico?') {
+            textArea.value = '';
+        }
+    });
+    textArea.addEventListener("blur", function() {
+        if (textArea.value === '') {
+            textArea.value = 'Para qual contexto você precisa de fundamento jurídico?';
+        }
+    });
+});
+</script>
+"""
 
+st.markdown(script, unsafe_allow_html=True)
 
 with st.form('my_form'):
-    text = st.text_area('Digite o contexto:', value='', help='Para qual contexto você precisa de fundamento jurídico?')
-    
+    text = st.text_area('Digite o contexto:', value='Para qual contexto você precisa de fundamento jurídico?', help='Para qual contexto você precisa de fundamento jurídico?')
+
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
