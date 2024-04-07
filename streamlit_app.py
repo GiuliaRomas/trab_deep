@@ -17,6 +17,16 @@ st.set_page_config(page_title="Pesquisa por Fundamento Jurídico", page_icon="�
 
 st.markdown("<h1 style='font-size:38px;'>⚖️ Pesquisa por Fundamento Jurídico</h1>", unsafe_allow_html=True)
 # escrever no sidebar
+st.sidebar.markdown('## Como usar:')
+st.sidebar.markdown('1. Entre com sua OpenAI API key')
+st.sidebar.markdown('2. Digite o contexto para o qual você precisa de fundamento jurídico')
+st.sidebar.markdown('3. Clique em Enviar')
+
+openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
+
+# colocar divisoria no sidebar
+st.sidebar.markdown('---')
+
 st.sidebar.markdown('## 📄 Sobre a aplicação:')
 # escrever no sidebar com letras menores
 st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por artigos e leis para fundamentar peças jurídicas')
@@ -24,7 +34,6 @@ st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por
 # colocar divisoria no sidebar
 st.sidebar.markdown('---')
 
-openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
 def inicializa(openai_api_key):
     # Caminho da pasta no Google Drive onde estão os arquivos
