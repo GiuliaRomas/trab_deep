@@ -26,7 +26,7 @@ openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
 def generate_response(input_text):
     # Caminho da pasta no Google Drive onde estão os arquivos
-    caminho_da_pasta = '/content/drive/MyDrive/deep/docs'
+    caminho_da_pasta = 'trab_deep/docs'
 
     # Lista para armazenar os documentos
     documents_list = []
