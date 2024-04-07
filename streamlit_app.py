@@ -24,7 +24,7 @@ st.sidebar.markdown('---')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
-def generate_response(input_text):
+def inicializa(openai_api_key):
     # Caminho da pasta no Google Drive onde estão os arquivos
     caminho_da_pasta = 'trab_deep/docs'
 
@@ -73,8 +73,12 @@ def generate_response(input_text):
     Resposta:/
     """
     prompt = ChatPromptTemplate.from_template(template)
+    
+    return prompt, retriever
 
+def generate_response(input_text, prompt, retriever, openai_api_key):
     #print(prompt)
+    promp, retriever = inicializa(openai_api_key)
     
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.0, openai_api_key=openai_api_key)
 
@@ -89,6 +93,8 @@ def generate_response(input_text):
     result = rag_chain.invoke(input_text)
     return result
 
+# inicializar o prompt e o retriever
+prompt, retriever = inicializa(openai_api_key)
 
 with st.form('my_form'):
     text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
@@ -97,6 +103,6 @@ with st.form('my_form'):
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
     if submitted and openai_api_key.startswith('sk-'):
-        resultado = generate_response(text)
+        resultado = generate_response(text, prompt, retriever, openai_api_key)
         # imprimir o resultado
         st.write(f"**Resposta:** {resultado}")
