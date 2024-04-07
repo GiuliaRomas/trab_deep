@@ -61,10 +61,11 @@ def inicializa(openai_api_key):
 
     retriever = vectorstore.as_retriever()
 
-    template = """Você é um assistente que irá responder retornando artigos e leis que podem ser aplicados no contexto fornecido.
+    template = """Você é um assistente que irá retornar artigos e leis que podem ser aplicados no contexto fornecido.
     Sempre especifique o nome da lei ou do estatuto em que os artigos se encontram.
     Forneça explicação geral dos artigos e leis, considerando o contexto.
     Não invente.
+    Se não houver pergunta direta, responda as leis e artigos que podem ser aplicados no contexto fornecido.
     Use as seguintes peças de texto para responder a pergunta.
     Se não souber a resposta, apenas responda que não sabe a resposta.
     Use no máximo sete sentenças e mantenha a resposta concisa.
