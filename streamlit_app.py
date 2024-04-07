@@ -105,4 +105,4 @@ with st.form('my_form'):
     if submitted and openai_api_key.startswith('sk-'):
         resultado = generate_response(text)
         # imprimir o resultado
-        st.write(f"**Resposta:** {resultado}")
+        st.caption(f"**Resposta:** {resultado}")
