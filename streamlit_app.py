@@ -125,7 +125,6 @@ with st.form('my_form'):
         <style>
         .justificado {
             text-align: justify;
-            border-bottom: 2px solid #000; /* Borda na parte inferior */
             padding-bottom: 10px; /* Espaçamento na parte inferior */
         }
         .negrito {
