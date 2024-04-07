@@ -36,7 +36,6 @@ def generate_response(input_text):
         for nome_arquivo in files:
             if nome_arquivo.endswith('.txt'):  # Verificar se o arquivo é um arquivo de texto
                 caminho_completo = os.path.join(root, nome_arquivo)
-                st.caption(caminho_completo)
 
                 try:
                     loader = TextLoader(caminho_completo, autodetect_encoding=True)
