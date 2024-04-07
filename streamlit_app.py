@@ -34,7 +34,6 @@ st.sidebar.markdown('## 📄 Sobre a aplicação:')
 st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por artigos e leis para fundamentar peças jurídicas')
 
 
-
 def inicializa(openai_api_key):
     # Caminho da pasta no Google Drive onde estão os arquivos
     caminho_da_pasta = 'trab_deep/docs'
@@ -120,4 +119,18 @@ with st.form('my_form'):
             prompt_global, retriever_global = inicializa(openai_api_key)
         resultado = generate_response(text, prompt_global, retriever_global, openai_api_key)
         # imprimir o resultado
-        st.caption(f"**Resposta:** {resultado}")
+        #st.write(f"**Resposta:** {resultado}")
+        # Estilo CSS para justificar o texto
+        css = """
+        <style>
+        .justificado {
+            text-align: justify;
+        }
+        </style>
+        """
+
+        # Inserir o estilo CSS na página
+        st.markdown(css, unsafe_allow_html=True)
+
+        # Inserir o texto justificado na página
+        st.markdown(f'<div class="justificado">{f"**Resposta:** {resultado}"}</div>', unsafe_allow_html=True)
