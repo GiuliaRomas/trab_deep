@@ -99,7 +99,7 @@ def generate_response(input_text, prompt, retriever, openai_api_key):
 
 
 with st.form('my_form'):
-    text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
+    text = st.text_area('Digite o contexto:', value='', help='Para qual contexto você precisa de fundamento jurídico?')
     
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
