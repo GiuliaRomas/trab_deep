@@ -125,6 +125,11 @@ with st.form('my_form'):
         <style>
         .justificado {
             text-align: justify;
+            border-bottom: 2px solid #000; /* Borda na parte inferior */
+            padding-bottom: 10px; /* Espaçamento na parte inferior */
+        }
+        .negrito {
+            font-weight: bold;
         }
         </style>
         """
@@ -132,5 +137,6 @@ with st.form('my_form'):
         # Inserir o estilo CSS na página
         st.markdown(css, unsafe_allow_html=True)
 
-        # Inserir o texto justificado na página
-        st.markdown(f'<div class="justificado">{f"**Resposta:** {resultado}"}</div>', unsafe_allow_html=True)
+        # Inserir o texto com a palavra "Resposta:" em negrito e o restante justificado e com borda na parte inferior
+        st.markdown(f'<div class="justificado"><span class="negrito">Resposta:</span> {resultado}</div>', unsafe_allow_html=True)
+
