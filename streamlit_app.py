@@ -78,7 +78,7 @@ def inicializa(openai_api_key):
 
 def generate_response(input_text, prompt, retriever, openai_api_key):
     #print(prompt)
-    promp, retriever = inicializa(openai_api_key)
+    
     
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.0, openai_api_key=openai_api_key)
 
@@ -95,7 +95,7 @@ def generate_response(input_text, prompt, retriever, openai_api_key):
 
 # inicializar o prompt e o retriever
 #prompt, retriever = inicializa(openai_api_key)
-cont_inicio = 0
+
 
 with st.form('my_form'):
     text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
@@ -103,10 +103,12 @@ with st.form('my_form'):
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
+        
     if submitted and openai_api_key.startswith('sk-'):
-        if cont_inicio == 0:
-            prompt, retriever = inicializa(openai_api_key)
-            cont_inicio = 1
-        resultado = generate_response(text, prompt, retriever, openai_api_key)
+        global prompt_global, retriever_global
+    
+        if 'prompt_global' not in globals():
+            prompt_global, retriever_global = inicializa(openai_api_key)
+        resultado = generate_response(text, prompt_global, retriever_global, openai_api_key)
         # imprimir o resultado
         st.write(f"**Resposta:** {resultado}")
