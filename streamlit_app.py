@@ -103,11 +103,10 @@ with st.form('my_form'):
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
-    else:
+    if submitted and openai_api_key.startswith('sk-'):
         if cont_inicio == 0:
             prompt, retriever = inicializa(openai_api_key)
             cont_inicio = 1
-    if submitted and openai_api_key.startswith('sk-'):
         resultado = generate_response(text, prompt, retriever, openai_api_key)
         # imprimir o resultado
         st.write(f"**Resposta:** {resultado}")
