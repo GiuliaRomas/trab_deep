@@ -86,8 +86,8 @@ def generate_response(input_text):
     )
 
     #query = "Contexto: Uma criança estava sofrendo maus tratos dos pais, quais artigos eu poderia utilizar para defender a criança?"
-    #result = rag_chain.invoke(input_text)
-    #return result
+    result = rag_chain.invoke(input_text)
+    return result
 
 
 with st.form('my_form'):
@@ -97,6 +97,6 @@ with st.form('my_form'):
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
     if submitted and openai_api_key.startswith('sk-'):
-        generate_response(text)
+        resultado = generate_response(text)
         # imprimir o resultado
-        #st.write(f"**Resposta:** {resultado}")
+        st.write(f"**Resposta:** {resultado}")
