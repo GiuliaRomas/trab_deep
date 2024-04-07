@@ -1,3 +1,6 @@
 streamlit
 openai
 langchain
+weaviate-client
+tiktoken
+langchain-openai

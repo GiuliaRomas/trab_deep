@@ -13,6 +13,8 @@ from langchain.text_splitter import CharacterTextSplitter
 import streamlit as st
 from langchain_community.llms import Ollama
 
+st.set_page_config(page_title="Pesquisa por Fundamento Jurídico", page_icon="⚖️")
+
 st.markdown("<h1 style='font-size:38px;'>⚖️ Pesquisa por Fundamento Jurídico</h1>", unsafe_allow_html=True)
 # escrever no sidebar
 st.sidebar.markdown('## 📄 Sobre a aplicação:')
@@ -24,9 +26,9 @@ st.sidebar.markdown('---')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
-def generate_response(input_text):
+def inicializa(openai_api_key):
     # Caminho da pasta no Google Drive onde estão os arquivos
-    caminho_da_pasta = '/content/drive/MyDrive/deep/docs'
+    caminho_da_pasta = 'trab_deep/docs'
 
     # Lista para armazenar os documentos
     documents_list = []
@@ -36,15 +38,11 @@ def generate_response(input_text):
         for nome_arquivo in files:
             if nome_arquivo.endswith('.txt'):  # Verificar se o arquivo é um arquivo de texto
                 caminho_completo = os.path.join(root, nome_arquivo)
-
-                try:
-                    loader = TextLoader(caminho_completo, autodetect_encoding=True)
-                    documents = loader.load()
-                    
-                    # Adicionar o documento à lista de documentos
-                    documents_list.extend(documents)
-                except Exception as e:
-                    print(f"Erro ao carregar o conteúdo do arquivo {nome_arquivo}: {e}")
+                loader = TextLoader(caminho_completo, autodetect_encoding=True)
+                documents = loader.load()
+                
+                # Adicionar o documento à lista de documentos
+                documents_list.extend(documents)
 
     # Agora, documents_list contém todos os documentos carregados
 
@@ -52,25 +50,24 @@ def generate_response(input_text):
     text_splitter = CharacterTextSplitter(chunk_size=500)
     chunks = text_splitter.split_documents(documents_list)
 
-    chunks[0:20]
-
     client = weaviate.Client(
         embedded_options = EmbeddedOptions()
     )
 
     vectorstore = Weaviate.from_documents(
         client = client,
-        documents = chunks,
+        documents = chunks[0:20],
         embedding = OpenAIEmbeddings(model="text-embedding-3-small", openai_api_key=openai_api_key),  #text-embedding-3-small usado para criar os embeddings
         by_text = False
     )
 
     retriever = vectorstore.as_retriever()
 
-    template = """Você é um assistente que irá responder retornando artigos e leis que podem ser aplicados no contexto fornecido.
+    template = """Você é um assistente que irá retornar artigos e leis que podem ser aplicados no contexto fornecido.
     Sempre especifique o nome da lei ou do estatuto em que os artigos se encontram.
     Forneça explicação geral dos artigos e leis, considerando o contexto.
     Não invente.
+    Se não houver pergunta direta, responda as leis e artigos que podem ser aplicados no contexto fornecido.
     Use as seguintes peças de texto para responder a pergunta.
     Se não souber a resposta, apenas responda que não sabe a resposta.
     Use no máximo sete sentenças e mantenha a resposta concisa.
@@ -79,8 +76,12 @@ def generate_response(input_text):
     Resposta:/
     """
     prompt = ChatPromptTemplate.from_template(template)
+    
+    return prompt, retriever
 
+def generate_response(input_text, prompt, retriever, openai_api_key):
     #print(prompt)
+    
     
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.0, openai_api_key=openai_api_key)
 
@@ -97,12 +98,17 @@ def generate_response(input_text):
 
 
 with st.form('my_form'):
-    text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
+    text = st.text_area('Digite o contexto:', key='Para qual contexto você precisa de fundamento jurídico?', help='Para qual contexto você precisa de fundamento jurídico?')
     
     submitted = st.form_submit_button('Enviar')
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
+        
     if submitted and openai_api_key.startswith('sk-'):
-        resultado = generate_response(text)
+        global prompt_global, retriever_global
+    
+        if 'prompt_global' not in globals():
+            prompt_global, retriever_global = inicializa(openai_api_key)
+        resultado = generate_response(text, prompt_global, retriever_global, openai_api_key)
         # imprimir o resultado
-        st.write(f"**Resposta:** {resultado}")
+        st.caption(f"**Resposta:** {resultado}")
