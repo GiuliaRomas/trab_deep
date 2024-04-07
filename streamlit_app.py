@@ -23,7 +23,7 @@ st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por
 st.sidebar.markdown('---')
 openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
 
-def inicializacao():
+def inicializacao(openai_api_key):
     # Caminho da pasta no Google Drive onde estão os arquivos
     caminho_da_pasta = 'trab_deep/docs'
 
@@ -96,7 +96,7 @@ def generate_response(input_text, prompt, retriever):
     #query = "Contexto: Uma criança estava sofrendo maus tratos dos pais, quais artigos eu poderia utilizar para defender a criança?"
     st.write(f'Resultado: {rag_chain.invoke(input_text)}')
 
-prompt, retriever = inicializacao()
+prompt, retriever = inicializacao(openai_api_key)
 
 with st.form('my_form'):
     text = st.text_area('Digite o contexto:', 'Para qual contexto você precisa de fundamento jurídico?')
