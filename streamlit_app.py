@@ -17,7 +17,7 @@ st.set_page_config(page_title="Pesquisa por Fundamento Jurídico", page_icon="�
 
 st.markdown("<h1 style='font-size:38px;'>⚖️ Pesquisa por Fundamento Jurídico</h1>", unsafe_allow_html=True)
 # escrever no sidebar
-st.markdown(
+st.sidebar.markdown(
             "## How to use\n"
             "1. Entre com sua OpenAI API key abaixo\n" 
             "2. Digite o contexto desejado\n"
