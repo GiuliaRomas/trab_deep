@@ -36,15 +36,11 @@ def generate_response(input_text):
         for nome_arquivo in files:
             if nome_arquivo.endswith('.txt'):  # Verificar se o arquivo é um arquivo de texto
                 caminho_completo = os.path.join(root, nome_arquivo)
-
-                try:
-                    loader = TextLoader(caminho_completo, autodetect_encoding=True)
-                    documents = loader.load()
-                    
-                    # Adicionar o documento à lista de documentos
-                    documents_list.extend(documents)
-                except Exception as e:
-                    print(f"Erro ao carregar o conteúdo do arquivo {nome_arquivo}: {e}")
+                loader = TextLoader(caminho_completo, autodetect_encoding=True)
+                documents = loader.load()
+                
+                # Adicionar o documento à lista de documentos
+                documents_list.extend(documents)
 
     # Agora, documents_list contém todos os documentos carregados
 
