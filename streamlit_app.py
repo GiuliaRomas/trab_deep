@@ -109,4 +109,12 @@ with st.form('my_form'):
             prompt_global, retriever_global = inicializa(openai_api_key)
         resultado = generate_response(text, prompt_global, retriever_global, openai_api_key)
         # imprimir o resultado
-        st.write(f"**Resposta:** {resultado}")
+        #st.write(f"**Resposta:** {resultado}")
+        styled_text = f"""
+        <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+            <h3 style="color: black;">Resposta:</h3>
+            <p>{resultado}</p>
+        </div>
+        """
+        
+        st.markdown(styled_text, unsafe_allow_html=True)
