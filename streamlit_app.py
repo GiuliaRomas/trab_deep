@@ -13,6 +13,8 @@ from langchain.text_splitter import CharacterTextSplitter
 import streamlit as st
 from langchain_community.llms import Ollama
 
+st.set_page_config(page_title="Pesquisa por Fundamento Jurídico", page_icon="⚖️")
+
 st.markdown("<h1 style='font-size:38px;'>⚖️ Pesquisa por Fundamento Jurídico</h1>", unsafe_allow_html=True)
 # escrever no sidebar
 st.sidebar.markdown('## 📄 Sobre a aplicação:')
@@ -109,12 +111,4 @@ with st.form('my_form'):
             prompt_global, retriever_global = inicializa(openai_api_key)
         resultado = generate_response(text, prompt_global, retriever_global, openai_api_key)
         # imprimir o resultado
-        #st.write(f"**Resposta:** {resultado}")
-        styled_text = f"""
-        <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
-            <h3 style="color: black;">Resposta:</h3>
-            <p>{resultado}</p>
-        </div>
-        """
-        
-        st.markdown(styled_text, unsafe_allow_html=True)
+        st.caption(f"**Resposta:** {resultado}")
