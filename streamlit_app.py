@@ -21,12 +21,12 @@ st.sidebar.caption('É uma ferramenta que tem o intuito de facilitar a busca por
 
 # colocar divisoria no sidebar
 st.sidebar.markdown('---')
-
 openai_api_key = st.sidebar.text_input('OpenAI API Key', type='password')
+prompt, retriever = inicializacao()
 
 def inicializacao():
     # Caminho da pasta no Google Drive onde estão os arquivos
-    caminho_da_pasta = 'trab/docs'
+    caminho_da_pasta = 'trab_deep/docs'
 
     # Lista para armazenar os documentos
     documents_list = []
@@ -83,8 +83,7 @@ def inicializacao():
     #print(prompt)
     return prompt, retriever
 
-def generate_response(input_text):
-    prompt, retriever = inicializacao()
+def generate_response(input_text, prompt, retriever):
     
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.0, openai_api_key=openai_api_key)
 
@@ -105,4 +104,4 @@ with st.form('my_form'):
     if not openai_api_key.startswith('sk-'):
         st.warning('Por favor, entre com sua OpenAi API key!', icon='⚠')
     if submitted and openai_api_key.startswith('sk-'):
-        generate_response(text)
+        generate_response(text, prompt, retriever)
