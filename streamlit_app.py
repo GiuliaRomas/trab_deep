@@ -72,8 +72,7 @@ def inicializa(openai_api_key):
     retriever = vectorstore.as_retriever()
 
     template = """Você é um assistente que irá retornar artigos e leis que podem ser aplicados no contexto fornecido.
-    Sempre especifique o número da lei ou do estatuto em que os artigos se encontram.
-    Se possível, especifique o nome da lei ou do estatuto em que os artigos se encontram.
+    Sempre especifique o número ou o nome da lei ou do estatuto em que os artigos se encontram.
     Forneça explicação geral dos artigos e leis, considerando o contexto.
     Não invente.
     Se não houver pergunta direta, responda as leis e artigos que podem ser aplicados no contexto fornecido.
